@@ -1,0 +1,25 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube Video Search</h1>
+        <form action="/search" method="post">
+            <div>
+                <label for="query">Enter Search Query:</label>
+                <input type="text" id="query" name="query" placeholder="Enter keywords..." required>
+            </div>
+            <div>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

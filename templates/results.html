@@ -1,0 +1,93 @@
+<!-- templates/results.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function translateDescriptions() {
+            const language = document.getElementById('language-select').value;
+            const videoDescriptions = document.getElementsByClassName('video-description');
+
+            const descriptions = [];
+            for (let desc of videoDescriptions) {
+                descriptions.push(desc.textContent);
+            }
+
+            fetch('/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    descriptions: descriptions,
+                    target_language: language
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const translatedDescriptions = data.translated_descriptions;
+                for (let i = 0; i < videoDescriptions.length; i++) {
+                    videoDescriptions[i].textContent = translatedDescriptions[i];
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Details</h1>
+
+        <!-- Language Selection Dropdown -->
+        <div class="language-selector">
+            <label for="language-select">Select Language:</label>
+            <select id="language-select">
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="zh">Chinese</option>
+                <option value="hi">Hindi</option>
+                <option value="ar">Arabic</option>
+                <option value="ru">Russian</option>
+                <option value="ja">Japanese</option>
+                <option value="pt">Portuguese</option>
+                <option value="it">Italian</option>
+                <option value="ko">Korean</option>
+                <option value="nl">Dutch</option>
+                <option value="sv">Swedish</option>
+                <option value="no">Norwegian</option>
+                <option value="fi">Finnish</option>
+                <option value="pl">Polish</option>
+                <option value="tr">Turkish</option>
+                <option value="vi">Vietnamese</option>
+                <option value="he">Hebrew</option>
+                <option value="th">Thai</option>
+                <option value="cs">Czech</option>
+                <option value="da">Danish</option>
+                <!-- Add more languages as needed -->
+            </select>
+            <button onclick="translateDescriptions()">Translate</button>
+        </div>
+
+        <hr>
+
+        {% for video in video_details_list %}
+        <div class="video-details">
+            <h2>{{ video.title }}</h2>
+            <p>Channel: {{ video.channel }}</p>
+            <p>Likes: {{ video.likes }}</p>
+            <p>Views: {{ video.views }}</p>
+            <p>Comments: {{ video.comments }}</p>
+            <h3>Description:</h3>
+            <p class="video-description">{{ video.translated_description }}</p>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>

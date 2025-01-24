@@ -1,0 +1,4 @@
+Flask==2.0.2
+google-api-python-client==2.39.0
+google-cloud-translate==3.13.0
+gunicorn
