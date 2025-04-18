@@ -1,7 +1,5 @@
 import googleapiclient.discovery
 
-# YouTube Data API key
-API_KEY = 'AIzaSyCXxwa709nJao-P8tbnkD_VlDPJ2qA2JOY'  # Replace with your YouTube Data API key
 
 def get_youtube_service():
     """Builds the YouTube service object for API calls."""
